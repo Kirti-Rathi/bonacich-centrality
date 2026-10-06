@@ -1,7 +1,17 @@
+import os
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io import mmread
+
+
+def get_dataset_path(filename):
+    if os.path.exists(filename):
+        return filename
+    dataset_dir_path = os.path.join("datasets", filename)
+    if os.path.exists(dataset_dir_path):
+        return dataset_dir_path
+    return filename
 
 
 def bonacich_centrality(G, alpha=1, beta=0.02, direction="out", node=None):
@@ -146,7 +156,7 @@ visualize_network(
 
 # 2. Dolphin Social Network
 
-D = nx.read_gml("dolphins.gml", label="id")
+D = nx.read_gml(get_dataset_path("dolphins.gml"), label="id")
 
 print("\n========================================")
 print("DOLPHIN NETWORK")
@@ -173,7 +183,7 @@ visualize_network(
 # 3. Football Network
 
 A_football = mmread(
-    "football.mtx",
+    get_dataset_path("football.mtx"),
     spmatrix=False
 ).toarray()
 
@@ -209,7 +219,7 @@ visualize_network(
 # 4. Political Books Network
 
 A_polbooks = mmread(
-    "polbooks.mtx",
+    get_dataset_path("polbooks.mtx"),
     spmatrix=False
 ).toarray()
 
